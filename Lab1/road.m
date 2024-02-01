@@ -36,6 +36,8 @@ ystart = [1002 2457 1749];
 % Vald tolerans
 tol = 1e-10;
 
+hnorm_lista = [];
+
 % Loop för de tre punkterna
 for i = 1:3
     iter = 0;
@@ -49,6 +51,7 @@ for i = 1:3
         x = x + h(1); y = y + h(2);
         hnorm = norm(h);
         iter = iter + 1;
+        hnorm_lista(iter,i) = hnorm;
     end
     % Samlar svaren i punktmatrisen (P)
     P(i+1,1) = x;
