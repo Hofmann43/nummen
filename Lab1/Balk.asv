@@ -72,28 +72,23 @@ t_dif1 = zeros(maxiter, 1);
 t_dif2 = zeros(maxiter, 1);
 
 
-T0 = 2; % Startgisning på tiden.
-T1 = 0; % Håller koll på skillanden i gissningar.
+T = 2; % Startgisning på tiden
 
 h0 = 0; % h_n-1
 h1 = 1.5; %h_n
 h2 = 2; %h_n+1
 
 for i = 1:maxiter
-    % Newtons metod
-    T1 = T0 - f(T0)/fd(T0, 1e-9);
-    % Sparar skillanden på gissningarna i kolumnvektorn.
+    T = T - f(T0)/fd(T0, 1e-9);
     t_dif1(i) = abs(T0-T1);
     T0 = T1;
     
     h0 = h1;
     h1 = h2;
-    % Kallar sekantmetoden.
     h2 = g(h0, h1);
-    % Sparar skillanden på gissningarna i kolumnvektorn.
     t_dif2(i) = abs(h1-h2);
 end
-% Skapar rätt längd på x-axeln
+
 x = 1:maxiter;
 figure;
 % Plottar Newtons metod.

@@ -77,7 +77,7 @@ yv = p4(c, xv);
 P
 
 % Plottar polynomet
-figure;
+%figure;
 plot(xv, yv, "r--");
 hold on
 % Plottar punkterna

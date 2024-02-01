@@ -17,8 +17,8 @@ A = [ones(size(t)), t, sin(w*t), cos(w*t)];
 c = A\Td;
 
 % Plockar vi ut konstanterna ur c
-c1 = c(1); % Ungefärlig medeltemp över tid.
-c2 = c(2); % Representerar långsiktig minskning/ ökning.
+c1 = c(1);
+c2 = c(2);
 A0 = c(3);
 A1 = c(4);
 
@@ -30,10 +30,9 @@ c3 = sqrt(A0^2 + A1^2); % Hittar genom trigettan som tar bort cos och sin.
 ts = acos(A0/c3)/w; % Använder c3 för att hitta ts
 ts_test = asin(-1*A1/c3)/w; % Ger ett annat svar av någon anledning
 
-% Plottar den faktiska temperaturen.
+% Plottar
 plot(t, Td)
 hold on
-% Plottar temperaturen från vår funktion (T(c,t))
 plot(t, T(c, t),"r", LineWidth=1.5)
 hold off
 
