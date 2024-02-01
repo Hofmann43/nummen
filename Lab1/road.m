@@ -26,7 +26,7 @@ for i = 1:3
     yunitB = AB(i,6) * sin(th) + AB(i,4);
     plot(xunitA, yunitA);
     plot(xunitB, yunitB);
-    hold off
+    %hold off
 end
 
 % Stargissningar från grafen
@@ -77,7 +77,7 @@ yv = p4(c, xv);
 P
 
 % Plottar polynomet
-figure;
+%figure;
 plot(xv, yv, "r--");
 hold on
 % Plottar punkterna
