@@ -15,15 +15,19 @@ y = @(t) 8.*exp(-t/2).*cos(3.*t);
 % Skillnaden mellan H (sökt värde) och funktiones värde (nuvarande värde)
 f = @(t) H - y(t);
 
+% Derivastans definition
+% f'(x) = lim_h->0 (f(x+h) - f(x)) / h
+fd = @(x, h) (f(x+h) - f(x))/h;
+
 % Derivatan av f()
-fd = @(t) 4*exp(-t/2)*cos(3*t)+24*exp(-t/2)*sin(3*t);
+% fd = @(t) 4*exp(-t/2)*cos(3*t)+24*exp(-t/2)*sin(3*t);
 
 % Noggrannhet
 tol = 1e-8;
 
 % Newtons Metod ( r_n+1 = r_n - f(r_n)/fp(r_n) )
 while abs(f(T0)) > tol
-    T1 = T0 - f(T0)/fd(T0);
+    T1 = T0 - f(T0)/fd(T0, 1e-8);
     iter1 = iter1 + 1;
     T0 = T1;
 end
@@ -32,10 +36,10 @@ iter1
 
 % Plottar för x=0 till x=10
 x = 0:0.1:10;
-%plot(x, y(x), "b", LineWidth=2)
-%hold on
-%yline(H, "r--", LineWidth=2)
-%hold off
+plot(x, y(x), "b", LineWidth=2)
+hold on
+yline(H, "r--", LineWidth=2)
+hold off
 
 % b)
 g = @(h0, h1) h1 - f(h1) * (h1 - h0)/(f(h1) - f(h0));
@@ -44,7 +48,7 @@ h1 = 1.5;
 h2 = 2;
 iter2 = 0;
 
-while abs(h2 - h1) > marg
+while abs(h2 - h1) > tol
     h0 = h1;
     h1 = h2;
     h2 = g(h0, h1);
@@ -66,7 +70,7 @@ h1 = 1.5;
 h2 = 2;
 
 for i = 1:maxiter
-    T1 = T0 - f(T0)/fd(T0);
+    T1 = T0 - f(T0)/fd(T0, 1e-9);
     t_dif1(i) = abs(T0-T1);
     T0 = T1;
     
