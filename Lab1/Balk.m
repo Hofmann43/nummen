@@ -1,10 +1,14 @@
 clear
 
 % H-värde givet i uppgiften
-H = 2.8464405473;
+H = 0.5;
 
 % Utgånggissning
-T = 2;
+T_gissning = 4.5;
+H_gissningar = [4, 5];
+
+T = T_gissning;
+
 
 iter1 = 0;
 
@@ -46,8 +50,8 @@ hold off
 % Sekantmetoden 
 g = @(h0, h1) h1 - f(h1) * (h1 - h0)/(f(h1) - f(h0));
 h0 = 0; % h_n-1
-h1 = 1.5; 5; % h_n
-h2 = 2; % h_n+1
+h1 = H_gissningar(1); % h_n
+h2 = H_gissningar(2); % h_n+1
 iter2 = 0;
 
 % Loopar genom sekantmetoden
@@ -66,18 +70,18 @@ iter2
 
 % c)
 % Beräknar maxitter för att få rätt längd på x-axeln. 
-maxiter = max(iter1, iter2);
+maxiter = max(iter1, iter2)+1;
 % Skapar två kolumnvektorer med 0or.
 t_dif1 = zeros(maxiter, 1);
 t_dif2 = zeros(maxiter, 1);
 
 
-T0 = 2; % Startgisning på tiden.
+T0 = T_gissning; % Startgisning på tiden.
 T1 = 0; % Håller koll på skillanden i gissningar.
 
 h0 = 0; % h_n-1
-h1 = 1.5; %h_n
-h2 = 2; %h_n+1
+h1 = 4; %h_n
+h2 = 5; %h_n+1
 
 for i = 1:maxiter
     % Newtons metod
@@ -100,5 +104,5 @@ figure;
 semilogy(x, t_dif1(x), "r--s")
 hold on
 % Plottar Sekantmetoden.
-semilogy(x, t_dif2(x), "b--o")
+plot(x, t_dif2(x), "b--o")
 legend("Newtons metod", "Sekantmetoden")
