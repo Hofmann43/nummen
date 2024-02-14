@@ -7,6 +7,7 @@ n = 1280;
 a = 0;
 b = 20;
 T = trapets(f,n,[a b]);
+S = simpsons()
 
 
 function T = trapets(f, n, limits)
