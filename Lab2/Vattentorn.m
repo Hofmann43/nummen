@@ -13,10 +13,10 @@ a = 0;
 % Övre integrationsgräns
 b = 20;
 % Beta-värde
-B = 0.2;
+Beta = 0.2;
 
 % Approximation med trapetsregeln
-T = pi*trapets(f,n,a,b, B);
+T = pi*trapets(f,n,a,b, Beta);
 
 % Steglista som dubblas, ger halva steglängden
 n_k = zeros(10,1);
@@ -29,7 +29,7 @@ end
 % Aproximationer med trapetsregeln där steglängden halveras
 T_k = zeros(1,length(n_k));
 for i=1:length(n_k)
-    T_k(1,i) = pi*trapets(f,n_k(i),a,b,B);
+    T_k(1,i) = pi*trapets(f,n_k(i),a,b,Beta);
 end
 
 % Tabell för approximationerna där steglängden halveras
@@ -53,12 +53,12 @@ title('Trapetsregeln: fel');
 hold on
 
 % Approximation med simpsons metod
-S = pi*simpsons(f,n,a,b, B);
+S = pi*simpsons(f,n,a,b, Beta);
 
 % Aproximationer med simpsons metod där steglängden halveras
 S_k = zeros(1,length(n_k));
 for i=1:length(n_k)
-    S_k(1,i) = pi*simpsons(f,n_k(i),a,b,B);
+    S_k(1,i) = pi*simpsons(f,n_k(i),a,b,Beta);
 end
 
 tabellS = zeros(length(n_k), 4);
@@ -76,7 +76,7 @@ semilogy(n_k, tabellS(1:end,3), "b");
 xlabel('Steg');
 ylabel('Felet');
 title('Simpsons metod: fel');
-
+hold off
 
 
 g = @(B) simpsons(f,1280,0,20,B)-1500;
@@ -86,19 +86,29 @@ B1 = 0.3;
 B = 0;
 
 while abs(B1-B0) > 10e-8
-    B = B1-y(B1,B)*(B1-B0)/(y(B1,B)-y(B0,B));
+    B = B1-y(B1,Beta)*(B1-B0)/(y(B1,Beta)-y(B0,Beta));
     B0 = B1;
     B1 = B;
-    B
+    B;
 end
+B
 
 Blist = 0:0.01:1;
 Btest = zeros(1, length(Blist));
 for i=1:length(Blist)
-    Btest(i) = y(Blist(i));
+    Btest(i) = y(Blist(i),Beta);
 end
 plot(Blist, Btest)
 
+% Rita tornet
+x = (0:10)';
+y = f(x, Beta);
+fi = 0:2*pi/100:2*pi;
+
+X = x*ones(size(fi));
+Y = y*cos(fi);
+Z = y*sin(fi);
+mesh(X,Y,Z)
 
 function T = trapets(f, n, a,b, B)
     h = (b - a) / n; % Beräknar steglängden
