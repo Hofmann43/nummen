@@ -1,0 +1,9 @@
+T_i = 450; % Vätskans temperatur
+T_e = 20; % Luftens temperatur
+
+N = 4;
+
+r0 = 1; % Randpunkt 1 (Inre radien)
+rN1 = 2; % Randpunkt 2 (Yttre radien)
+
+T_0 = T_i; % Randvärde 1 (T
