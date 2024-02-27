@@ -7,7 +7,7 @@ C = 0.5;
 R = 1;
 
 % tidspann
-tspan = [0, 20];
+tspan = [0, 40];
 
 % Initial värden
 Y0 = [1; 0];
@@ -58,8 +58,8 @@ for j = 1:length(n_values)
         Y = Y + h * dY; % Uppdatera Y
         yVec(i+1,:) = Y'; % Spara nya Y
     end
-    subplot(num_plo, 1, j);
-    plot(TOUT_dampad, YOUT_dampad(:,1), 'b', 'DisplayName', 'ODE45');
+    subplot(2, 2, j);
+    plot(TOUT_odampad, YOUT_odampad(:,1), 'b', 'DisplayName', 'ODE45');
     hold on;
     plot(tVec, yVec(:,1), 'r--', 'DisplayName', sprintf('Euler N=%d', N));
     hold off;
