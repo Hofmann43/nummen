@@ -45,12 +45,12 @@ for i=1:length(n_k)
 end
 
 % Plottar felet
-figure
+figure;
 semilogy(n_k, tabellT(1:end,3), "r");
 xlabel('Steg');
 ylabel('Felet');
 title('Trapetsregeln: fel');
-hold off
+hold 
 
 
 % Approximation med simpsons metod
@@ -73,7 +73,6 @@ for i=1:length(n_k)
 end
 
 % Plottar felet
-figure
 semilogy(n_k, tabellS(1:end,3), "b");
 xlabel('Steg');
 ylabel('Felet');
