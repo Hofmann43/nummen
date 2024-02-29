@@ -33,14 +33,14 @@ for i=1:length(n_k)
 end
 
 % Tabell för approximationerna där steglängden halveras
-% Antal steg | Aprox. | Fel jämfört med 1280 steg | Nogrannhetsordning (e_h)/(e_h/2)
+% Antal steg | Aprox. | Fel jämfört med 1280 steg | Nogrannhetsordning log((e_h)/(e_h/2))/log(2)
 tabellT = zeros(length(n_k), 4);
 for i=1:length(n_k)
     tabellT(i,1) = n_k(i); % Stegen
     tabellT(i,2) = T_k(i); % Svaren
     tabellT(i,3) = abs(T-T_k(i)); % Felet
     if i > 1
-        tabellT(i,4) = tabellT(i-1,3)/tabellT(i,3); % Ordningen
+        tabellT(i,4) = log(tabellT(i-1,3)/tabellT(i,3))/log(2); % Ordningen
     end 
 end
 
@@ -62,47 +62,28 @@ for i=1:length(n_k)
     S_k(1,i) = pi*simpsons(f,n_k(i),a,b,Beta);
 end
 
+% Tabell för approximationerna där steglängden halveras
+% Antal steg | Aprox. | Fel jämfört med 1280 steg | Nogrannhetsordning log((e_h)/(e_h/2))/log(2)
 tabellS = zeros(length(n_k), 4);
 for i=1:length(n_k)
     tabellS(i,1) = n_k(i); % Stegen
     tabellS(i,2) = S_k(i); % Svaren
     tabellS(i,3) = abs(S-S_k(i)); % Felet
     if i > 1
-        tabellS(i,4) = tabellS(i-1,3)/tabellS(i,3); % Ordningen
+        tabellS(i,4) = log(tabellS(i-1,3)/tabellS(i,3))/log(2); % Ordningen
     end
 end
 
 % Plottar felet
 figure
-semilogy(n_k, tabellS(1:end,3), "b");
+semilogy(tabellS(1:end,1), tabellS(1:end,3), "b");
 xlabel('Steg');
 ylabel('Felet');
 title('Simpsons metod: fel');
 hold off
 
-
-g = @(B) simpsons(f,1280,0,20,B)-1500;
-
-B0 = 0.25;
-B1 = 0.3;
-B = 0;
-
-while abs(B1-B0) > 10e-8
-    B = B1-y(B1,Beta)*(B1-B0)/(y(B1,Beta)-y(B0,Beta));
-    B0 = B1;
-    B1 = B;
-    B;
-end
-B
-
-Blist = 0:0.01:1;
-Btest = zeros(1, length(Blist));
-for i=1:length(Blist)
-    Btest(i) = y(Blist(i),Beta);
-end
-plot(Blist, Btest)
-
 % Rita tornet
+figure
 x = (0:10)';
 y = f(x, Beta);
 fi = 0:2*pi/100:2*pi;
@@ -111,6 +92,7 @@ X = x*ones(size(fi));
 Y = y*cos(fi);
 Z = y*sin(fi);
 mesh(X,Y,Z)
+hold off
 
 function T = trapets(f, n, a,b, B)
     h = (b - a) / n; % Beräknar steglängden
