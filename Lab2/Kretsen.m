@@ -6,10 +6,10 @@ L = 2;
 C = 0.5;
 R = 1;
 
-% tidspann
-tspan = [0, 40];
+% Tidspann
+tspan = [0, 20];
 
-% Initial värden
+% Initialvärden
 Y0 = [1; 0];
 
 % Löser ekvatioen
@@ -27,14 +27,14 @@ R = 0;
 [TOUT_odampad,YOUT_odampad] = ode45(@(t, Y) odesyst(Y, L, R, C), tspan, Y0);
 
 % Plotta lösningen
-figure;
 plot(TOUT_odampad, YOUT_odampad(:,1), 'r');
 hold off;
 
 
 % Startvärden
 T = 40;
-
+R = 1;
+tspan = [0, 40];
 n_values = [40,80,160,320];
 
 t_list = linspace(0, T); 
@@ -52,11 +52,13 @@ for j = 1:length(n_values)
     tVec = linspace(0, T, N+1)';
     yVec(1,:) = Y0';
     
+    dY = 0;
     % Eulers metod frammåt
     for i = 1:N
         dY = odesyst(Y, L, R, C); % Beräkna derivatan
         Y = Y + h * dY; % Uppdatera Y
-        yVec(i+1,:) = Y'; % Spara nya Y
+        yVec(i+1,:) = Y; % Spara nya Y
+
     end
     subplot(2, 2, j);
     plot(TOUT_dampad, YOUT_dampad(:,1), 'b', 'DisplayName', 'ODE45');
@@ -71,14 +73,14 @@ end
 function dY = odesyst(Y, L, R, C)
     % Laddningen
     q = Y(1);
-    % Strömen
+    % Strömmen
     i = Y(2);
     
     % Differential equations system
     dq = i;
     di = -(R/L)*i - (1/(L*C))*q;
     
-    % en lista med strömen och laddningen som ode45 använder
+    % En lista med strömmen och laddningen som ode45 använder
     dY = [dq; di];
 end
 
