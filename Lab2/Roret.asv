@@ -22,14 +22,14 @@ while abs(T_new-T_old) > 1e-2 % Två decimalers noggrannhet
 end
 N = N/2; % Dividera med två för att få det slutgiltiga N-värdet
 T_new
-% T_r i r = 2
-T(N*1)
+% r = 2
+T(N/2)
 
 figure
 i = 1:N; % Skapar en lista av i-värden
 plot(linspace(1,2,length(T)),T(i), "r", LineWidth=2)
 hold on
-xline(1.7) % Grafisk lösning
+xline(1.5) % Grafisk lösning
 title("Temperaturen i röret")
 xlabel("Radie (le)")
 ylabel("Temperatur (C)")

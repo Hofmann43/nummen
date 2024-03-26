@@ -3,8 +3,12 @@ clear
 y = @(x, B) (exp(B * x) + 8) ./ (1 + (x / 5).^3);
 f = @(x, B) (y(x, B).^2);
 
+a = 0;
+b = 20;
+N = 320;
+
 % Funktionen där ett B-värde ska hittas så att g(B) = 0
-g = @(B) (pi*integral(@(x) f(x, B), 0, 20)-1500);
+g = @(B) (pi*integral(@(x) f(x, B), a, b)-3376);
 
 % Startgissningar
 B0 = 0;
@@ -30,7 +34,6 @@ title("Sekantmetoden")
 
 % Skriv ut resultatet
 B
-
 
 
 

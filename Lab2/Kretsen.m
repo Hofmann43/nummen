@@ -60,6 +60,7 @@ for j = 1:length(n_values)
         yVec(i+1,:) = Y; % Spara nya Y
 
     end
+    [TOUT_dampad,YOUT_dampad] = ode45(@(t, Y) odesyst(Y, L, R, C), tspan, Y0);
     subplot(2, 2, j);
     plot(TOUT_dampad, YOUT_dampad(:,1), 'b', 'DisplayName', 'ODE45');
     hold on;

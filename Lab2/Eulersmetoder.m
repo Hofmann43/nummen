@@ -1,4 +1,6 @@
 clear
+% Euler framåt stabilitet: y'=-λy, y(0)=1, => h<2/λ
+
 % Definiera funktionen och exakt lösning
 f = @(t,y) sin(3*t) - 2*y;
 y_exact = @(t) (93/65)*exp(-2*t) - (3/13)*cos(3*t) + (2/13)*sin(3*t);
